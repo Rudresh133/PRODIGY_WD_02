@@ -29,22 +29,3 @@ A clean and modern **Stopwatch Web App** built using **HTML, CSS, and JavaScript
 2. Open **index.html** in any web browser
 3. Use the stopwatch controls to start timing
 
----
-
-## 💡 Future Improvements
-
-* Dark/Light mode toggle
-* Mobile responsive layout
-* Countdown timer mode
-* Sound notification on lap or reset
-
----
-
-## 👨‍💻 Author
-
-**Rudresh Suryawanshi**
-
----
-
-⭐ If you like this project, consider giving it a **star** on GitHub!
-
