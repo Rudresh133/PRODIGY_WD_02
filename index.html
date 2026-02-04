@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        background-color: #000; /* Black background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .stopwatch-card {
+        background: #ffffff; /* White stopwatch */
+        color: #000;
+        padding: 40px;
+        border-radius: 40px;
+        box-shadow: 0 10px 25px rgba(255,255,255,0.15);
+        text-align: center;
+        width: 360px;
+    }
+
+    #display {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 15px;
+        background: #f5f5f5;
+        letter-spacing: 2px;
+    }
+
+    .controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    button {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+    }
+
+    .start { color: green; }
+    .stop { color: red; }
+    .lap { color: blue; }
+
+    #laps {
+        max-height: 150px;
+        overflow-y: auto;
+        text-align: left;
+        padding: 10px;
+        border-radius: 12px;
+        background: #f5f5f5;
+        font-size: 0.9rem;
+    }
+
+    .lap-item {
+        padding: 4px 0;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="stopwatch-card">
+    <div id="display">00:00:00</div>
+
+    <div class="controls">
+        <button class="start" onclick="start()">Start</button>
+        <button class="stop" onclick="stop()">Stop</button>
+        <button class="lap" onclick="lap()">Lap</button>
+        <button onclick="reset()">Reset</button>
+    </div>
+
+    <div id="laps"></div>
+</div>
+
+<script>
+    let time = 0;
+    let timer = null;
+    let lapCount = 0;
+
+    const display = document.getElementById("display");
+    const lapsDiv = document.getElementById("laps");
+
+    function formatTime(t) {
+        let m = Math.floor(t / 6000).toString().padStart(2, "0");
+        let s = Math.floor((t % 6000) / 100).toString().padStart(2, "0");
+        let ms = (t % 100).toString().padStart(2, "0");
+        return `${m}:${s}:${ms}`;
+    }
+
+    function start() {
+        if (timer) return;
+
+        timer = setInterval(() => {
+            time++;
+            display.innerText = formatTime(time);
+        }, 10);
+    }
+
+    function stop() {
+        clearInterval(timer);
+        timer = null;
+    }
+
+    function reset() {
+        stop();
+        time = 0;
+        lapCount = 0;
+        display.innerText = "00:00:00";
+        lapsDiv.innerHTML = "";
+    }
+
+    function lap() {
+        if (!timer) return;
+
+        lapCount++;
+        const lapItem = document.createElement("div");
+        lapItem.className = "lap-item";
+        lapItem.innerText = `Lap ${lapCount} — ${formatTime(time)}`;
+        lapsDiv.prepend(lapItem);
+    }
+</script>
+
+</body>
+</html>
